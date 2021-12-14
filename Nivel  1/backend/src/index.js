@@ -1,12 +1,51 @@
 const express = require('express');
-const {uuid} = require('uuidv4')
+const {uuid, isUuid} = require('uuidv4')
 
 const projects = []
 const app = express();
 
+function logRequests(request, response, next){
+    console.time('logLabel')
+    const {method, url} = request
+
+    console.log({
+        method:method.toUpperCase(),
+        url:url,
+        owner:"Anderson B. Silva"
+    })
+    
+    next()
+    console.timeEnd('logLabel')
+}
+
+function logIntercepts(request, response, next){
+    console.log('QUANTOS MIDDLEWARES QUSIER')
+    
+    return next()
+}
+
+function validadeProjectId2(request, response, next){
+    console.log('OPA RODOU AQUI EM ')
+
+    next()
+}
+
+function validadeProjectId(request, response, next){
+    const {id} = request.params
+    
+    if(!isUuid(id)){
+        return response.status(400).json({error:"Invalid project ID"})
+    }
+
+    next()
+}
+
 app.use(express.json())
 
-app.get('/projects', (req, res) => {
+app.use(logRequests)
+app.use('/projects/:id', validadeProjectId2)
+
+app.get('/projects', logIntercepts,(req, res) => {
     console.log(req.query)
     const {title} = req.query
 
@@ -27,7 +66,7 @@ app.post('/projects', (req, res) => {
     return res.status(200).json(project)
 })
 
-app.put('/projects/:id', (req, res) => {
+app.put('/projects/:id', validadeProjectId ,(req, res) => {
     console.log(req.params)
     const { id } =  req.params
     const {title, owner} = req.body
@@ -49,7 +88,7 @@ app.put('/projects/:id', (req, res) => {
     return res.status(200).json(project)
 })
 
-app.delete('/projects/:id', (req, res) => {
+app.delete('/projects/:id', validadeProjectId ,(req, res) => {
     console.log(req.params)
     const { id } =  req.params
 
