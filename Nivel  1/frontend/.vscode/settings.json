@@ -89,4 +89,7 @@
 
 	"material-icon-theme.activeIconPack": "nest",
 	"screencastMode.onlyKeyboardShortcuts": true,
+
+	"emmet.syntaxProfiles":{"javascript":"jsx"},
+	"emmet.includeLanguages":{"javascript":"javascriptreact"}
 }

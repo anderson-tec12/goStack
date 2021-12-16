@@ -1,6 +1,6 @@
-function sum(a,b){
-  return a + b 
-}
+import React from 'react';
+import {render} from 'react-dom';
 
+import {App} from './App'
 
-console.log(sum(10,20))
+render(<App />, document.getElementById('app'))
