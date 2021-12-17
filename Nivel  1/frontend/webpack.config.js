@@ -37,6 +37,15 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader",
       },
+      {
+        test: /.*\.(gif|png|jpe?g)$/i,
+        use: "file-loader",
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
+      },
     ],
   },
 };

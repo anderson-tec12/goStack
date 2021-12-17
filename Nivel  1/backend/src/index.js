@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const {uuid, isUuid} = require('uuidv4')
+
 
 const projects = []
 const app = express();
+app.use(cors())
 
 function logRequests(request, response, next){
     console.time('logLabel')
