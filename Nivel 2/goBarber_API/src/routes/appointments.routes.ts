@@ -21,9 +21,18 @@ appointmentsRouter.post("/", (req, res) => {
     });
   }
 
-  const appointment = appointmentsRepository.create(provider, startHour);
+  const appointment = appointmentsRepository.create({
+    provider,
+    date: startHour,
+  });
 
   return res.json(appointment);
+});
+
+appointmentsRouter.get("/", (req, res) => {
+  const appointments = appointmentsRepository.all();
+
+  return res.json(appointments);
 });
 
 export default appointmentsRouter;
