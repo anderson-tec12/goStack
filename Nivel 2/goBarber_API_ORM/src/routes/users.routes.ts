@@ -15,6 +15,9 @@ usersRouter.post("/", async (req, res) => {
     const { name, email, password } = req.body;
 
     const user = await createUserService.execute({ name, email, password });
+
+    delete user.password;
+
     res.status(200).json(user);
   } catch (err: any) {
     res.status(400).json({
