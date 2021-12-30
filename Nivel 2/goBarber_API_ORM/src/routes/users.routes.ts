@@ -16,6 +16,7 @@ usersRouter.post("/", async (req, res) => {
 
     const user = await createUserService.execute({ name, email, password });
 
+    //@ts-ignore
     delete user.password;
 
     res.status(200).json(user);
