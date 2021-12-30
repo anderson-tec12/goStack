@@ -4,6 +4,7 @@ import { getCustomRepository } from "typeorm";
 
 import AppointmentsRepository from "../repositories/AppointmentsRepository";
 import CreateAppointmentService from "../services/CreateAppointmentService";
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
 interface Error {
   name: string;
@@ -12,6 +13,8 @@ interface Error {
 }
 
 const appointmentsRouter = Router();
+
+appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.post("/", async (req, res) => {
   try {
@@ -35,6 +38,7 @@ appointmentsRouter.post("/", async (req, res) => {
 });
 
 appointmentsRouter.get("/", async (req, res) => {
+  console.log(req.user);
   const appointmentsRepository = getCustomRepository(AppointmentsRepository);
   const appointments = await appointmentsRepository.find();
 
