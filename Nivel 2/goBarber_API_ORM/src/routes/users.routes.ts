@@ -1,11 +1,18 @@
 import { Router } from "express";
+import multer from "multer";
+
+import uploadConfig from "../config/upload";
+
 import CreateUserService from "../services/CreateUserService";
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
 interface Error {
   name: string;
   message: string;
   stack?: string;
 }
+
+const upload = multer(uploadConfig);
 
 const usersRouter = Router();
 
@@ -26,5 +33,15 @@ usersRouter.post("/", async (req, res) => {
     });
   }
 });
+
+usersRouter.patch(
+  "/avatar",
+  ensureAuthenticated,
+  upload.single("avatar"),
+  async (req, res) => {
+    console.log(req.file?.filename);
+    return res.json({ ok: true });
+  }
+);
 
 export default usersRouter;
