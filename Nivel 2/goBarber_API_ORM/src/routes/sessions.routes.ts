@@ -10,20 +10,14 @@ interface Error {
 const sessionsRouter = Router();
 
 sessionsRouter.post("/", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const authenticateUser = new AuthenticateUserService();
+  const { email, password } = req.body;
+  const authenticateUser = new AuthenticateUserService();
 
-    const { user, token } = await authenticateUser.execute({ email, password });
+  const { user, token } = await authenticateUser.execute({ email, password });
 
-    //@ts-ignore
-    delete user.password;
-    res.status(200).json({ user, token });
-  } catch (err: any) {
-    res.status(400).json({
-      error: err.message,
-    });
-  }
+  //@ts-ignore
+  delete user.password;
+  res.status(200).json({ user, token });
 });
 
 export default sessionsRouter;
