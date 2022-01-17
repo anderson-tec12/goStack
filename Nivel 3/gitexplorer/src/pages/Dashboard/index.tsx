@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from "react";
 import logoImg from "../../assets/logo.svg";
 import { api } from "../../services/api";
 import { FiChevronRight } from "react-icons/fi";
-import { Title, Container, Form, Repositories } from "./styles";
+import { Title, Container, Form, Repositories, Error } from "./styles";
 
 /*
   rocketseat/unform
@@ -20,6 +20,7 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState("");
+  const [inputError, setInputError] = useState("");
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   async function handleAddRepositories(
@@ -27,11 +28,21 @@ const Dashboard: React.FC = () => {
   ): Promise<void> {
     e.preventDefault();
 
-    const { data } = await api.get<Repository>(`repos/${newRepo}`);
+    if (!newRepo) {
+      setInputError("Digite o autor/nome do repositorio");
+      return;
+    }
 
-    console.log(data);
-    setRepositories([...repositories, data]);
-    setNewRepo("");
+    try {
+      const { data } = await api.get<Repository>(`repos/${newRepo}`);
+
+      console.log(data);
+      setRepositories([...repositories, data]);
+      setNewRepo("");
+      setInputError("");
+    } catch (err) {
+      setInputError("Erro na busca por esse repositório");
+    }
   }
 
   function renderRepositories(repository: Repository) {
@@ -53,7 +64,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <img src={logoImg} alt="Github log" />
       <Title>Explore repositórios no Github</Title>
-      <Form onSubmit={handleAddRepositories}>
+      <Form hasError={!!inputError} onSubmit={handleAddRepositories}>
         <input
           type="text"
           placeholder="Digite o nome do repositorio"
@@ -62,6 +73,9 @@ const Dashboard: React.FC = () => {
         />
         <button type="submit">Pesquisar</button>
       </Form>
+
+      {inputError && <Error>{inputError}</Error>}
+
       <Repositories>{repositories.map(renderRepositories)}</Repositories>
     </Container>
   );
