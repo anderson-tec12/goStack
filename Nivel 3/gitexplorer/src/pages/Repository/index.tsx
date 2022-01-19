@@ -1,15 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import logoImg from "../../assets/logo.svg";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-
+import { api } from "../../services/api";
 import { Header, RepositoryInfo, Issues } from "./styles";
+
 interface RepositoryParams {
   repository: string;
 }
 
+interface RepositoryProps {
+  full_name: string;
+  description: string;
+  stargazers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+}
+
+interface Issue {
+  title: string;
+  id: number;
+  html_url: string;
+  user: {
+    login: string;
+  };
+}
+
 const Repository: React.FC = () => {
   const { params } = useRouteMatch<RepositoryParams>();
+
+  const [repository, setRepository] = useState<RepositoryProps | null>(null);
+  const [issues, setIssues] = useState<Issue[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const [repository, issues] = await Promise.all([
+        api.get(`repos/${params.repository}`),
+        api.get(`repos/${params.repository}/issues`),
+      ]);
+
+      setRepository(repository.data);
+      setIssues(issues.data);
+    }
+
+    loadData();
+  }, [params.repository]);
   return (
     <>
       <Header>
@@ -19,42 +58,52 @@ const Repository: React.FC = () => {
           voltar
         </Link>
       </Header>
-      <RepositoryInfo>
-        <header>
-          <img src="http://placeimg.com/640/480/nightlife" alt="" />
-          <div>
-            <strong>ola</strong>
-            <p>Descrição</p>
-          </div>
-        </header>
 
-        <ul>
-          <li>
-            <strong>1808</strong>
-            <span>Stars</span>
-          </li>
+      {repository && (
+        <RepositoryInfo>
+          <header>
+            <img src={repository.owner.avatar_url} alt={repository.full_name} />
+            <div>
+              <strong>{repository.full_name}</strong>
+              <p>{repository.description}</p>
+            </div>
+          </header>
 
-          <li>
-            <strong>48</strong>
-            <span>Forks</span>
-          </li>
+          <ul>
+            <li>
+              <strong>{repository.stargazers_count}</strong>
+              <span>Stars</span>
+            </li>
 
-          <li>
-            <strong>67</strong>
-            <span>Issues</span>
-          </li>
-        </ul>
-      </RepositoryInfo>
+            <li>
+              <strong>{repository.forks_count}</strong>
+              <span>Forks</span>
+            </li>
+
+            <li>
+              <strong>{repository.open_issues_count}</strong>
+              <span>Issues</span>
+            </li>
+          </ul>
+        </RepositoryInfo>
+      )}
 
       <Issues>
-        <Link to={`repository`}>
-          <div>
-            <strong>repository.full_name</strong>
-            <p>repository.description</p>
-          </div>
+        {issues.map((issue) => (
+          <a
+            key={issue.id}
+            href={issue.html_url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div>
+              <strong>{issue.title}</strong>
+              <p>{issue.user.login}</p>
+            </div>
 
-          <FiChevronRight size={20} />
-        </Link>
+            <FiChevronRight size={20} />
+          </a>
+        ))}
       </Issues>
     </>
   );

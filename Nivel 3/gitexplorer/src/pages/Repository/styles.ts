@@ -53,11 +53,10 @@ export const RepositoryInfo = styled.section`
     list-style: none;
     margin-top: 40px;
 
-    & + li {
-      margin-left: 80px;
-    }
-
     li {
+      & + li {
+        margin-left: 80px;
+      }
       strong {
         display: block;
         font-size: 36px;
