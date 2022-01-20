@@ -1,8 +1,11 @@
 import GlobalStyles from "./styles/global";
+
+import SignIn from "./pages/SignIn";
+
 function App() {
   return (
     <>
-      <h1>GoBarber</h1>
+      <SignIn />
       <GlobalStyles />
     </>
   );
