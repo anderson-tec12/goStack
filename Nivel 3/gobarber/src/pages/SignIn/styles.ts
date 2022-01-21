@@ -13,7 +13,7 @@ export const Content = styled.div`
   flex-direction: column;
   place-content: center;
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   align-items: center;
 
   form {
@@ -23,23 +23,6 @@ export const Content = styled.div`
 
     h1 {
       margin-bottom: 24px;
-    }
-
-    input {
-      background: #232129;
-      border: 2px solid #232129;
-      border-radius: 10px;
-      width: 100%;
-      padding: 16px;
-      color: #f4ede8;
-
-      &::placeholder {
-        color: #666360;
-      }
-
-      & + input {
-        margin-top: 8px;
-      }
     }
 
     button {
@@ -65,7 +48,7 @@ export const Content = styled.div`
       text-decoration: none;
       transition: color 0.2s;
       &:hover {
-        background: ${shade(0.2, "#f4ede8")};
+        color: ${shade(0.2, "#f4ede8")};
       }
     }
   }
@@ -79,7 +62,7 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     &:hover {
-      background: ${shade(0.2, "#ff9000")};
+      color: ${shade(0.2, "#ff9000")};
     }
 
     svg {
