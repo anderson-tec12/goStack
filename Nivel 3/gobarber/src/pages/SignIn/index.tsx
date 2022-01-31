@@ -10,7 +10,7 @@ import LogoImg from "../../assets/logo.svg";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-import { useAuthProvider } from "../../context/AuthContext";
+import { useAuthProvider } from "../../hooks/AuthContext";
 
 import { Container, Background, Content } from "./styles";
 
@@ -40,9 +40,14 @@ const SignIn: React.FC = () => {
         signIn({ password: data.password, email: data.email });
       } catch (err) {
         console.dir(err);
+        console.info(err instanceof Yup.ValidationError);
 
-        const errors = getValidationErros(err as Yup.ValidationError);
-        formRef.current?.setErrors(errors);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErros(err as Yup.ValidationError);
+          formRef.current?.setErrors(errors);
+          return;
+        }
+
         // formRef.current?.setErrors({
         //   name: "Nome Obrigatorio",
         // });
