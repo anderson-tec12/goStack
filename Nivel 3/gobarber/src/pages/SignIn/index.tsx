@@ -1,4 +1,4 @@
-import { useCallback, useRef, useContext } from "react";
+import { useCallback, useRef } from "react";
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
@@ -20,7 +20,7 @@ interface SignInFormData {
 }
 
 const SignIn: React.FC = () => {
-  const { signIn, user } = useAuthProvider();
+  const { signIn } = useAuthProvider();
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
