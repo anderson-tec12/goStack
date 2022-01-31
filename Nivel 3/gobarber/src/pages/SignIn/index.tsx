@@ -10,39 +10,46 @@ import LogoImg from "../../assets/logo.svg";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-import AuthContext from "../../context/AuthContext";
+import { useAuthProvider } from "../../context/AuthContext";
 
 import { Container, Background, Content } from "./styles";
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
-  const auth = useContext(AuthContext);
+  const { signIn, user } = useAuthProvider();
   const formRef = useRef<FormHandles>(null);
 
-  console.log(auth);
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required("E-mail obrigatório")
+            .email("Digite um e-mail válido"),
+          password: Yup.string().required("Senha obrigatório"),
+        });
 
-  const handleSubmit = useCallback(async (data: object) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required("E-mail obrigatório")
-          .email("Digite um e-mail válido"),
-        password: Yup.string().required("Senha obrigatório"),
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        signIn({ password: data.password, email: data.email });
+      } catch (err) {
+        console.dir(err);
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      console.dir(err);
-
-      const errors = getValidationErros(err as Yup.ValidationError);
-      formRef.current?.setErrors(errors);
-      // formRef.current?.setErrors({
-      //   name: "Nome Obrigatorio",
-      // });
-    }
-  }, []);
+        const errors = getValidationErros(err as Yup.ValidationError);
+        formRef.current?.setErrors(errors);
+        // formRef.current?.setErrors({
+        //   name: "Nome Obrigatorio",
+        // });
+      }
+    },
+    [signIn]
+  );
 
   return (
     <Container>
