@@ -11,6 +11,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 import { useAuthProvider } from "../../hooks/AuthContext";
+import { useToast } from "../../hooks/ToastContext";
 
 import { Container, Background, Content } from "./styles";
 
@@ -21,6 +22,7 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const { signIn } = useAuthProvider();
+  const { addToast } = useToast();
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
@@ -47,13 +49,13 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(errors);
           return;
         }
-
+        addToast();
         // formRef.current?.setErrors({
         //   name: "Nome Obrigatorio",
         // });
       }
     },
-    [signIn]
+    [signIn, addToast]
   );
 
   return (

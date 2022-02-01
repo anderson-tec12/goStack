@@ -1,17 +1,16 @@
 import GlobalStyles from "./styles/global";
-import { AuthProvider } from "./hooks/AuthContext";
 
-import { ToastContainer } from "./components/ToastContainer";
+import { AppProvider } from "./hooks";
 import SignIn from "./pages/SignIn";
 // import SignUp from "./pages/SignUp";
 
 function App() {
   return (
     <>
-      <AuthProvider>
+      <AppProvider>
         <SignIn />
-      </AuthProvider>
-      <ToastContainer />
+      </AppProvider>
+
       <GlobalStyles />
     </>
   );
