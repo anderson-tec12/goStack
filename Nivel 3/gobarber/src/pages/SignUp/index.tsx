@@ -5,8 +5,9 @@ import { FormHandles } from "@unform/core";
 import { getValidationErros } from "../../utils/getValidationErros";
 import * as Yup from "yup";
 import { ValidationError } from "yup";
+import { Link } from "react-router-dom";
 
-import { Container, Background, Content } from "./styles";
+import { Container, Background, Content, AnimationContainer } from "./styles";
 import LogoImg from "../../assets/logo.svg";
 
 import Input from "../../components/Input";
@@ -44,36 +45,43 @@ const SignUp: React.FC = () => {
     <Container>
       <Background />
       <Content>
-        <img src={LogoImg} alt="GoBarber" />
+        <AnimationContainer>
+          <img src={LogoImg} alt="GoBarber" />
 
-        <Form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          initialData={{
-            name: "",
-            email: "",
-            password: "",
-          }}
-        >
-          <h1>Faça seu cadastro</h1>
+          <Form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            initialData={{
+              name: "",
+              email: "",
+              password: "",
+            }}
+          >
+            <h1>Faça seu cadastro</h1>
 
-          <Input icon={FiUser} name="name" type="text" placeholder="Nome" />
-          <Input icon={FiMail} name="email" type="text" placeholder="E-email" />
-          <Input
-            icon={FiLock}
-            name="password"
-            placeholder="Senha"
-            type="password"
-          />
+            <Input icon={FiUser} name="name" type="text" placeholder="Nome" />
+            <Input
+              icon={FiMail}
+              name="email"
+              type="text"
+              placeholder="E-email"
+            />
+            <Input
+              icon={FiLock}
+              name="password"
+              placeholder="Senha"
+              type="password"
+            />
 
-          <Button name="teste" data-biscoito={1} type="submit">
-            Cadastrar
-          </Button>
-        </Form>
-        <a href="forgot">
-          <FiArrowLeft />
-          Voltar para logon
-        </a>
+            <Button name="teste" data-biscoito={1} type="submit">
+              Cadastrar
+            </Button>
+          </Form>
+          <Link to="/">
+            <FiArrowLeft />
+            Voltar para logon
+          </Link>
+        </AnimationContainer>
       </Content>
     </Container>
   );
