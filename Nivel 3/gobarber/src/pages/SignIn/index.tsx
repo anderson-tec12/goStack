@@ -39,17 +39,19 @@ const SignIn: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-        signIn({ password: data.password, email: data.email });
+        await signIn({ password: data.password, email: data.email });
       } catch (err) {
-        console.dir(err);
-        console.info(err instanceof Yup.ValidationError);
-
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErros(err as Yup.ValidationError);
           formRef.current?.setErrors(errors);
           return;
         }
-        addToast();
+        addToast({
+          title: "Erro na autenticação",
+          type: "error",
+          description: "ocorreu um erro ao fazer login, cheque as credenciais.",
+        });
+
         // formRef.current?.setErrors({
         //   name: "Nome Obrigatorio",
         // });

@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
+
 import { Api } from "../services/apiClient";
 
 interface CredentialsProps {
@@ -43,7 +44,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       localStorage.setItem("CURSO_@GoBarber:token", token);
       localStorage.setItem("CURSO_@GoBarber:user", JSON.stringify(user));
       setData({ token, ...user });
-    } catch (err) {}
+    } catch (err) {
+      throw new Error();
+    }
   }, []);
 
   const signOut = useCallback(() => {
