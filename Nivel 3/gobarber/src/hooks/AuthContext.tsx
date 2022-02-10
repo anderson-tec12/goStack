@@ -43,7 +43,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       localStorage.setItem("CURSO_@GoBarber:token", token);
       localStorage.setItem("CURSO_@GoBarber:user", JSON.stringify(user));
-      setData({ token, ...user });
+      setData({ token, user });
     } catch (err) {
       throw new Error();
     }

@@ -1,8 +1,6 @@
 import Toast from "./Toast";
-import { useTransition, animated } from "react-spring";
+import { useTransition } from "react-spring";
 import { Container } from "./styles";
-
-import { useCallback } from "react";
 
 interface Props {
   messages: messageProps[];

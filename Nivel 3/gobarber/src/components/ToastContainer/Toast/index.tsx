@@ -28,7 +28,7 @@ const Toast: React.FC<ToastProps> = ({ toast: message, style }) => {
   const { removeToast } = useToast();
 
   useEffect(() => {
-    const timer = setTimeout(() => removeToast(message.id), 3000);
+    const timer = setTimeout(() => removeToast(message.id), 13000);
 
     return () => {
       console.log("NÂO EXISTE MAIS");
@@ -38,7 +38,7 @@ const Toast: React.FC<ToastProps> = ({ toast: message, style }) => {
 
   return (
     <Container
-      hasDescription={!!message.description}
+      data-hasDescription={!!message.description}
       type={message.type}
       style={style}
     >

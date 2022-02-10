@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { animated } from "react-spring";
 type ToastProps = {
   type?: "success" | "error" | "info";
-  hasDescription: boolean;
+  "data-hasDescription": boolean;
 };
 
 const toastTypesVariantions = {
@@ -60,7 +60,7 @@ export const Container = styled(animated.div)<ToastProps>`
   }
 
   ${(props) =>
-    !props.hasDescription &&
+    !props["data-hasDescription"] &&
     css`
       align-items: center;
 
