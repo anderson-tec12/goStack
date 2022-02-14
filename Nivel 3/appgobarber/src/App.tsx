@@ -10,12 +10,12 @@ const App: React.FC = () => {
     <NavigationContainer>
       <StatusBar
         barStyle="light-content"
-        backgroundColor="#312e31"
-        hidden={false}
+        backgroundColor="#312e38"
+        hidden={true}
       />
       <View
         style={{
-          backgroundColor: "#312e31",
+          backgroundColor: "#312e38",
           flex: 1,
         }}
       >
