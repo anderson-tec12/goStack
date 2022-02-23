@@ -3,7 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { View, StatusBar } from "react-native";
 
-import { AuthRoutes } from "./routes";
+import Routes from "./routes";
+
+import { AppProvider } from "./hooks";
 
 const App: React.FC = () => {
   return (
@@ -13,14 +15,16 @@ const App: React.FC = () => {
         backgroundColor="#312e38"
         hidden={true}
       />
-      <View
-        style={{
-          backgroundColor: "#312e38",
-          flex: 1,
-        }}
-      >
-        <AuthRoutes />
-      </View>
+      <AppProvider>
+        <View
+          style={{
+            backgroundColor: "#312e38",
+            flex: 1,
+          }}
+        >
+          <Routes />
+        </View>
+      </AppProvider>
     </NavigationContainer>
   );
 };
