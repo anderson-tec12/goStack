@@ -60,7 +60,7 @@
 		"domain": "class",
 		"schemas": "class",
 		"typeorm": "database",
-		"repositories": "mappings",
+		"repositories": "rules",
 		"http": "container",
 		"migrations": "tools",
 		"modules": "components",
