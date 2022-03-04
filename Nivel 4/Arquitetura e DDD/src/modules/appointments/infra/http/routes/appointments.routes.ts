@@ -12,11 +12,11 @@ interface Error {
 }
 
 const appointmentsRouter = Router();
-const appointmentsRepository = new AppointmentsRepository();
 
 appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.post("/", async (req, res) => {
+  const appointmentsRepository = new AppointmentsRepository();
   const { provider_id, date } = req.body;
 
   const parsedDate = parseISO(date);
