@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { container } from "tsyringe";
-
-import AuthenticateUserService from "@modules/users/services/AuthenticateUserService";
+import SessionsController from "../controllers/SessionsController";
 
 interface Error {
   name: string;
@@ -10,16 +8,8 @@ interface Error {
 }
 
 const sessionsRouter = Router();
+const sessionsController = new SessionsController();
 
-sessionsRouter.post("/", async (req, res) => {
-  const { email, password } = req.body;
-  const authenticateUser = container.resolve(AuthenticateUserService); //new AuthenticateUserService();
-
-  const { user, token } = await authenticateUser.execute({ email, password });
-
-  //@ts-ignore
-  delete user.password;
-  res.status(200).json({ user, token });
-});
+sessionsRouter.post("/", sessionsController.create);
 
 export default sessionsRouter;
