@@ -17,7 +17,7 @@ describe("CreateAppointment", () => {
     expect(appointment.provider_id).toBe("123");
   });
 
-  it("should not  be able to create two appointtments on the same time ", () => {
-    expect(2 + 2).toBe(4);
-  });
+  // it("should not  be able to create two appointtments on the same time ", () => {
+  //   expect(2 + 2).toBe(4);
+  // });
 });
