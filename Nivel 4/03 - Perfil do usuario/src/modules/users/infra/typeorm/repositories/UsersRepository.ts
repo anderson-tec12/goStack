@@ -11,14 +11,14 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
-  public findById(id: string): Promise<User | undefined> {
-    const user = this.ormRepository.findOne(id);
+  public async findById(id: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne(id);
 
     return user;
   }
 
-  public findByEmail(email: string): Promise<User | undefined> {
-    const user = this.ormRepository.findOne({
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
       where: { email },
     });
     return user;
@@ -33,7 +33,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async save(user: User): Promise<User> {
-    return this.ormRepository.save(user);
+    return await this.ormRepository.save(user);
   }
 }
 
