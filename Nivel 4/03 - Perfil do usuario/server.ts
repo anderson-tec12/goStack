@@ -27,7 +27,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   }
 
   console.error(err);
-  console.dir(err);
 
   return res
     .status(500)
